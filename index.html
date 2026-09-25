@@ -51,7 +51,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .cashier{position:absolute;right:9%;bottom:7%;width:230px;height:330px}.head{position:absolute;top:0;left:50%;width:96px;height:96px;transform:translateX(-50%);border-radius:45%;background:linear-gradient(145deg,#f5c39d,#b96e4c)}.hair{position:absolute;top:-7px;left:50%;width:102px;height:58px;transform:translateX(-50%);background:#191919;border-radius:55% 55% 35% 35%}.cbody{position:absolute;top:87px;left:50%;width:145px;height:185px;transform:translateX(-50%);background:linear-gradient(90deg,#242424,#555,#222);border-radius:25px 25px 10px 10px}.shirt{position:absolute;top:105px;left:50%;width:90px;height:75px;transform:translateX(-50%);background:#eee;border-radius:10px 10px 22px 22px}.arm{position:absolute;top:112px;width:35px;height:130px;border-radius:20px;background:#e7aa83}.arm.l{left:17px;transform:rotate(10deg)}.arm.r{right:17px;transform:rotate(-10deg)}
 .confirm{position:absolute;left:8%;bottom:8%;width:min(420px,80vw);padding:18px;border:1px solid #3a3a3a;background:#111;direction:rtl}.sum{display:flex;justify-content:space-between;color:#bbb;margin-bottom:14px}.wa{display:block;padding:16px;background:#e9e4da;color:#050505;text-align:center;text-decoration:none;font-weight:900}.note{font-size:11px;color:#777;line-height:1.6;margin-top:9px}
 @media(max-width:760px){.grid{grid-template-columns:1fr 1fr;margin-top:190px}.product{min-height:300px}.tee{top:70px;width:68%}.big{font-size:20vw;top:18vh}.wardrobe{width:82vw;height:58vh}.cashier{right:0;transform:scale(.72);transform-origin:bottom right}.table{left:4%;width:82%}.bag{left:30%}.ready{left:6%;top:19%;font-size:16vw}.confirm{left:6%;bottom:4%}}
+
+.character3d{
+ position:absolute;right:6%;bottom:2%;width:min(34vw,430px);height:min(58vh,520px);
+ z-index:3;display:flex;align-items:flex-end;justify-content:center;pointer-events:auto;
+}
+.character3d model-viewer{
+ width:100%;height:100%;background:transparent;--poster-color:transparent;
+}
+@media(max-width:760px){
+ .character3d{right:-3%;bottom:5%;width:58vw;height:48vh}
+}
 </style>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js"></script>
 </head>
 <body>
 <div id="intro"><div class="grain"></div><div class="cursorLight" id="cursorLight"></div>
@@ -83,7 +95,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
  <div class="frame"></div><div class="ctitle"><small>VOID/01 — PACKING STUDIO</small><h1 id="chosenName">Black Essential Tee</h1></div>
  <div class="ready">YOUR ORDER<br>IS READY<small>تم تجهيز طلبك</small></div>
  <div class="table"></div><div class="bag"></div>
- <div class="cashier"><div class="hair"></div><div class="head"></div><div class="cbody"></div><div class="shirt"></div><div class="arm l"></div><div class="arm r"></div></div>
+ <div class="character3d">
+  <model-viewer id="characterModel"
+    src="assets/character.glb"
+    camera-controls
+    auto-rotate
+    rotation-per-second="18deg"
+    shadow-intensity="1"
+    exposure="0.9"
+    interaction-prompt="none"
+    alt="VOID/01 3D character">
+  </model-viewer>
+</div>
  <div class="confirm"><div class="sum"><span>السعر</span><strong id="chosenPrice">899 EGP</strong></div>
  <a class="wa" id="wa" target="_blank" rel="noopener">تأكيد الأوردر على WhatsApp</a>
  <div class="note">هتتفتح واتساب برسالة مجهزة بتفاصيل الطلب. التأكيد النهائي بيتم من خلال الأدمن بعد وصول الرسالة.</div></div>
@@ -118,7 +141,7 @@ function openCheckout(p){
  checkout.classList.add('active');
  gsap.fromTo(checkout,{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.7});
  gsap.from('.ctitle,.ready,.confirm',{y:45,opacity:0,stagger:.12,duration:.8,ease:'power3.out'});
- gsap.from('.cashier',{x:220,opacity:0,duration:1,ease:'power3.out',delay:.25});
+ gsap.from('.character3d',{x:220,opacity:0,duration:1,ease:'power3.out',delay:.25});
  gsap.from('.bag',{y:160,scale:.65,opacity:0,rotation:-8,duration:1,ease:'back.out(1.5)',delay:.45});
 }
 document.getElementById('close').onclick=()=>gsap.to(checkout,{opacity:0,scale:.97,duration:.4,onComplete:()=>checkout.classList.remove('active')});
