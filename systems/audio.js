@@ -1,1 +1,13 @@
-export class AudioSystem{constructor(){this.enabled=true}setEnabled(v){this.enabled=v}playSFX(name){if(!this.enabled)return;/* Hook WebAudio/SFX assets here. */}}
+export class AudioSystem {
+  constructor() {
+    this.enabled = true;
+  }
+
+  setEnabled(value) {
+    this.enabled = value;
+  }
+
+  playSFX(name) {
+    if (!this.enabled) return;
+  }
+}
